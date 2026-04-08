@@ -1,0 +1,19 @@
+[
+  {
+    "name": "NibrutMirror",
+    "versions": [
+      {
+        "version_name": "9.1.34.2060",
+        "url": "https://github.com/cinnabar-island/NibrutMirror/releases/download/9.1.34.2060/v9.1.34.2060.apk",
+        "version": 1
+      },
+      {
+        "version_name": "9.1.36.1948",
+        "url": "https://github.com/cinnabar-island/NibrutMirror/releases/download/9.1.36.1948/v9.1.36.1948.apk",
+        "version": 2
+      }
+    ],
+    "packageName": "com.spotify.music",
+    "icon": "https://m.media-amazon.com/images/I/51rttY7a+9L.png"
+  }
+]
