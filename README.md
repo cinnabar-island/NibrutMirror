@@ -6,7 +6,7 @@ While you can directly download releases from this GitHub, it's pointless to do 
 
 Instead, this GitHub is a mirror for his releases to input into the HYDRV app as a custom backend, which can manage downloads for you and notify you when an update is released.
 
-1. Go to the app's Advanced settings page and input the [link to this file](https://raw.githubusercontent.com/cinnabar-island/NibrutMirror/refs/heads/main/nibrut.json) into the custom backend section, then set it as active.
+1. Go to the app's Advanced settings page and input the [link to this file](https://raw.githubusercontent.com/cinnabar-island/NibrutMirror/refs/heads/main/backend.json) into the custom backend section, then set it as active.
 2. When you want to download/update the app, just download the latest release from the homepage of the app.
 3. After downloading, go to your downloads page and tap install to install the app.
 4. From there you can choose to keep or delete the downloaded APK.
