@@ -1,5 +1,5 @@
 # NibrutMirror
-Mirror repo for Nibrut's mod releases, designed for use with HYDRV
+Mirror repo for Nibrut's mod releases, designed for use with [HYDRV](https://github.com/Team-HYDRV/HYDRV)
 
 ## How to use this mirror?
 While you can directly download releases from this GitHub, it's pointless to do that because you can just download them from Nibrut's Telegram channel.
