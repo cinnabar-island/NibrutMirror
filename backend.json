@@ -11,9 +11,12 @@
         "version_name": "9.1.36.1948",
         "url": "https://github.com/cinnabar-island/NibrutMirror/releases/download/9.1.36.1948/v9.1.36.1948.apk",
         "version": 2
+      },
+      {
+        "version_name": "9.1.36.1949",
+        "url": "https://github.com/cinnabar-island/NibrutMirror/releases/download/9.1.36.1949/v9.1.36.1948.apk",
+        "version": 3
       }
-    ],
-    "packageName": "com.spotify.music",
-    "icon": "https://m.media-amazon.com/images/I/51rttY7a+9L.png"
+    ]
   }
 ]
