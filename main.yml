@@ -1,0 +1,84 @@
+name: Update Releases JSON
+
+permissions:
+  contents: write
+
+on:
+  release:
+    types: [published]
+
+  workflow_dispatch:
+    inputs:
+      package_name:
+        description: "Android package name"
+        required: false
+
+      icon:
+        description: "Icon URL"
+        required: false
+
+      keywords:
+        description: "Comma-separated keywords (e.g. amoled,tablet)"
+        required: false
+
+  repository_dispatch:
+    types: [new_release]
+
+jobs:
+  update-json:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: pip install requests
+
+      # Hardcoded repo values
+      - name: Set fixed repo
+        run: |
+          echo "OWNER=cinnabar-island" >> $GITHUB_ENV
+          echo "REPO=NibrutMirror" >> $GITHUB_ENV
+          echo "PACKAGE=${{ github.event.inputs.package_name }}" >> $GITHUB_ENV
+          echo "ICON=${{ github.event.inputs.icon }}" >> $GITHUB_ENV
+          echo "KEYWORDS=${{ github.event.inputs.keywords }}" >> $GITHUB_ENV
+
+      - name: Run script
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          CMD="python main.py \
+            --owner \"$OWNER\" \
+            --repo \"$REPO\" \
+            --output releases.json"
+
+          if [ ! -z "$PACKAGE" ]; then
+            CMD="$CMD --package-name \"$PACKAGE\""
+          fi
+
+          if [ ! -z "$ICON" ]; then
+            CMD="$CMD --icon \"$ICON\""
+          fi
+
+          if [ ! -z "$KEYWORDS" ]; then
+            CMD="$CMD --keywords \"$KEYWORDS\""
+          fi
+
+          eval $CMD
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+
+          git add releases.json
+
+          git commit -m "Update releases JSON" || echo "No changes"
+
+          git push
