@@ -1,0 +1,41 @@
+name: Update Backend JSON on Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  update-json:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Update backend.json
+        run: |
+          VERSION_NAME="${{ github.event.release.tag_name }}"
+          URL="https://github.com/cinnabar-island/NibrutMirror/releases/download/${VERSION_NAME}/v${VERSION_NAME}.apk"
+          # Calculate the next version integer by looking at the last entry
+          CURRENT_VERSION=$(jq '.[0].versions[-1].version' backend.json)
+          NEXT_VERSION=$((CURRENT_VERSION + 1))
+
+          # Create the new version object
+          NEW_ENTRY=$(jq -n \
+            --arg vn "$VERSION_NAME" \
+            --arg url "$URL" \
+            --arg v "$NEXT_VERSION" \
+            '{version_name: $vn, url: $url, version: ($v | tonumber)}')
+
+          # Append to the versions array in the first object of the main array
+          jq ".[0].versions += [$NEW_ENTRY]" backend.json > backend.json.tmp && mv backend.json.tmp backend.json
+
+      - name: Commit and Push changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add backend.json
+          git commit -m "chore: update backend.json for release ${{ github.event.release.tag_name }}"
+          git push
